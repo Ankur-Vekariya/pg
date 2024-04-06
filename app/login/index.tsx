@@ -8,8 +8,8 @@ import { createClient } from "@supabase/supabase-js";
 import { SafeAreaView, TextInput } from "react-native";
 import { Link, router } from "expo-router";
 export default function LoginScreen() {
-  const [email, onChangeEmail] = useState("Email");
-  const [password, onChangePassword] = useState("Password");
+  const [email, onChangeEmail] = useState("admin@admin.com");
+  const [password, onChangePassword] = useState("admin");
 
   const supabase = createClient(
     "https://mjuoregelcweebqtiyyl.supabase.co",
