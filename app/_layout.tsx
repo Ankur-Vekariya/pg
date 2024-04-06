@@ -60,7 +60,9 @@ function RootLayoutNav() {
         <Stack.Screen name="login/index" options={{ headerShown: false }} />
         <Stack.Screen name="signup/index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="editpg/index" options={{ headerShown: true }} />
+        <Stack.Screen name="pg/editpg/index" options={{ headerShown: true }} />
+        <Stack.Screen name="pg/pgdetails/index" options={{ headerShown: true }} />
+
         <Stack.Screen name="editmanager/index" options={{ headerShown: true }} />
 
 

@@ -51,7 +51,11 @@ export default function TabTwoScreen() {
               justifyContent: "space-between",
             }}
           >
-            <View>
+            <View
+              style={{
+                backgroundColor: "#fff",
+              }}
+            >
               <Text style={styles.title}>{item?.managerName}</Text>
               <Text style={{ fontSize: 16 }}>{item?.address}</Text>
               <Text style={{ fontSize: 16 }}>{item?.mobileNo}</Text>
@@ -61,6 +65,7 @@ export default function TabTwoScreen() {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
+                backgroundColor: "#fff",
               }}
             >
               <TouchableOpacity>

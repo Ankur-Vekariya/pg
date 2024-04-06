@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/constants/Supabase";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export default function TabThreeScreen() {
   const [managers, setManagers] = useState([]);
@@ -30,8 +31,11 @@ export default function TabThreeScreen() {
     <View style={styles.container}>
       {managers?.map((item, index) => {
         return (
-          <View
+          <TouchableOpacity
             key={index}
+            onPress={() => {
+              router.push("/pg/pgdetails/");
+            }}
             style={{
               shadowColor: "#000",
               shadowOffset: {
@@ -46,22 +50,27 @@ export default function TabThreeScreen() {
               padding: 10,
               marginVertical: 5,
               borderRadius: 10,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
+              // display: "flex",
+              // flexDirection: "row",
+              // justifyContent: "space-between",
             }}
           >
-            <View>
-              <Text style={styles.title}>{item?.name}</Text>
-              <Text style={{ fontSize: 16 }}>{item?.address}</Text>
-              <Text style={{ fontSize: 16 }}>{item?.rooms}</Text>
-              <Text style={{ fontSize: 16 }}>{item?.manager}</Text>
-
-            </View>
-            <View
+            {/* <View
+              style={{
+                backgroundColor: "#fff",
+              }}
+            > */}
+            <Text style={styles.title}>{item?.name}</Text>
+            <Text style={{ fontSize: 16 }}>{item?.address}</Text>
+            <Text style={{ fontSize: 16 }}>{item?.rooms}</Text>
+            <Text style={{ fontSize: 16 }}>{item?.manager}</Text>
+            {/* </View> */}
+            {/* <View
               style={{
                 display: "flex",
                 flexDirection: "row",
+                backgroundColor: "#fff",
+
                 justifyContent: "space-between",
               }}
             >
@@ -71,8 +80,8 @@ export default function TabThreeScreen() {
               <TouchableOpacity>
                 <MaterialIcons name="delete" size={24} color="black" />
               </TouchableOpacity>
-            </View>
-          </View>
+            </View> */}
+          </TouchableOpacity>
         );
       })}
     </View>
