@@ -34,7 +34,10 @@ export default function TabThreeScreen() {
           <TouchableOpacity
             key={index}
             onPress={() => {
-              router.push("/pg/pgdetails/");
+              router.push({
+                pathname: "/pg/pgdetails/",
+                params: { id: item?.id },
+              });
             }}
             style={{
               shadowColor: "#000",

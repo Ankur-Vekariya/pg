@@ -6,18 +6,18 @@ import { Text, View } from "@/components/Themed";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { SafeAreaView, TextInput } from "react-native";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
 export default function PgDetailScreen() {
-  const [pgDetails, setPgDetails] = useState({
-    name: "",
-    address: "",
-    rooms: "",
-  });
+  const params = useLocalSearchParams();
+  const { id } = params;
+
+  console.log("id==========", id);
+
+  const [pgDetails, setPgDetails] = useState([]);
   const [managers, setManagers] = useState([]);
   const [selectedManager, setSelectedManager] = useState();
-  0;
 
   const supabase = createClient(
     "https://mjuoregelcweebqtiyyl.supabase.co",
@@ -26,13 +26,14 @@ export default function PgDetailScreen() {
 
   console.log("selectedManager", typeof selectedManager, selectedManager);
 
-  const addPg = async () => {
-    const { data, error } = await supabase.from("pg").select(id);
+  const getPgDetails = async () => {
+    const { data, error } = await supabase.from("pg").select().eq("id", id);
     if (error == null) {
-      router.push("/(tabs)/four");
+      setPgDetails(data);
+      // router.push("/(tabs)/four");
     }
-    console.log("data=======", data);
-    console.log("error=======", error);
+    console.log("getPgDetails data=======", data);
+    console.log("getPgDetails error=======", error);
   };
 
   const getManagers = async () => {
@@ -46,7 +47,8 @@ export default function PgDetailScreen() {
   };
 
   useEffect(() => {
-    getManagers();
+    // getManagers();
+    getPgDetails();
   }, []);
 
   console.log("managers", managers);
@@ -54,54 +56,19 @@ export default function PgDetailScreen() {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text style={styles.title}>Add new PG</Text>
-        <Text style={styles.label}>PG Name</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(e) => {
-            console.log("e", e);
+        <Text style={styles.title}>{pgDetails[0]?.name}</Text>
+        <Text style={styles.label}>{pgDetails[0]?.address}</Text>
+        <Text style={styles.label}>{pgDetails[0]?.rooms}</Text>
 
-            setPgDetails({ ...pgDetails, name: e });
+        <Button
+          title="Add Room"
+          onPress={() => {
+            router.push({
+              pathname: "/room/editroom/",
+              params: { id: id },
+            });
           }}
-          value={pgDetails?.name}
         />
-        <Text style={styles.label}>Address</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(e) => {
-            setPgDetails({ ...pgDetails, address: e });
-          }}
-          value={pgDetails?.address}
-        />
-        <Text style={styles.label}>Select Manager</Text>
-        <Picker
-          selectedValue={selectedManager}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedManager(itemValue)
-          }
-        >
-          {managers.map((item, index) => {
-            return (
-              <Picker.Item
-                key={index}
-                label={item?.managerName}
-                value={item?.id}
-              />
-            );
-          })}
-          {/* <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" /> */}
-        </Picker>
-        <Text style={styles.label}>Rooms</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(e) => {
-            setPgDetails({ ...pgDetails, rooms: e });
-          }}
-          value={pgDetails?.rooms}
-        />
-
-        <Button title="Add" onPress={addPg} />
       </SafeAreaView>
     </View>
   );
