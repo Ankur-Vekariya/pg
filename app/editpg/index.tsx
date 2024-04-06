@@ -10,8 +10,11 @@ import { Link, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
 export default function EditPGScreen() {
-  const [email, onChangeEmail] = useState("Email");
-  const [password, onChangePassword] = useState("Password");
+  const [pgDetails, setPgDetails] = useState({
+    name: "",
+    address: "",
+    rooms: "",
+  });
   const [managers, setManagers] = useState([]);
   const [selectedManager, setSelectedManager] = useState();
   0;
@@ -21,11 +24,21 @@ export default function EditPGScreen() {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdW9yZWdlbGN3ZWVicXRpeXlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3OTQyMjUsImV4cCI6MjAyNzM3MDIyNX0.g8mr0u7mZl6KO_8erFPLGcMzS6O3_ofrZkCX12vChPM"
   );
 
-  const login = async () => {
+  console.log("selectedManager", typeof selectedManager, selectedManager);
+
+  const addPg = async () => {
     const { data, error } = await supabase
-      .from("countries")
-      .insert({ id: 1, name: "Denmark" })
+      .from("pg")
+      .insert({
+        name: pgDetails?.name,
+        address: pgDetails?.address,
+        manager: selectedManager,
+        rooms: pgDetails?.rooms,
+      })
       .select();
+    if (error == null) {
+      router.push("/(tabs)/four");
+    }
     console.log("data=======", data);
     console.log("error=======", error);
   };
@@ -53,14 +66,20 @@ export default function EditPGScreen() {
         <Text style={styles.label}>PG Name</Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeEmail}
-          value={email}
+          onChangeText={(e) => {
+            console.log("e", e);
+
+            setPgDetails({ ...pgDetails, name: e });
+          }}
+          value={pgDetails?.name}
         />
         <Text style={styles.label}>Address</Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeEmail}
-          value={email}
+          onChangeText={(e) => {
+            setPgDetails({ ...pgDetails, address: e });
+          }}
+          value={pgDetails?.address}
         />
         <Text style={styles.label}>Select Manager</Text>
         <Picker
@@ -70,34 +89,27 @@ export default function EditPGScreen() {
           }
         >
           {managers.map((item, index) => {
-            return <Picker.Item key={index} label={item?.managerName} value={item?.id} />;
+            return (
+              <Picker.Item
+                key={index}
+                label={item?.managerName}
+                value={item?.id}
+              />
+            );
           })}
           {/* <Picker.Item label="Java" value="java" />
           <Picker.Item label="JavaScript" value="js" /> */}
         </Picker>
-        <Text style={styles.label}>PG Name</Text>
+        <Text style={styles.label}>Rooms</Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeEmail}
-          value={email}
+          onChangeText={(e) => {
+            setPgDetails({ ...pgDetails, rooms: e });
+          }}
+          value={pgDetails?.rooms}
         />
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangePassword}
-          value={password}
-        />
-        <Button title="Press me" onPress={login} />
-        <Text style={styles.title}>
-          Dont have an account
-          <Link href="/signup/">Register</Link>
-        </Text>
-        {/* <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="useless placeholder"
-          keyboardType="numeric"
-        /> */}
+
+        <Button title="Add" onPress={addPg} />
       </SafeAreaView>
     </View>
   );
