@@ -9,7 +9,7 @@ import { SafeAreaView, TextInput } from "react-native";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
-export default function EditRoomScreen() {
+export default function EditBedScreen() {
   const type = [
     { name: "AC", value: "ac" },
     { name: "Non-AC", value: "non-Fac" },

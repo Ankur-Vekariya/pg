@@ -74,6 +74,14 @@ function RootLayoutNav() {
           name="room/editroom/index"
           options={{ headerShown: true, presentation: "transparentModal" }}
         />
+        <Stack.Screen
+          name="bed/editbed/index"
+          options={{ headerShown: true, presentation: "transparentModal" }}
+        />
+        <Stack.Screen
+          name="bed/beds/index"
+          options={{ headerShown: true, presentation: "transparentModal" }}
+        />
 
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
