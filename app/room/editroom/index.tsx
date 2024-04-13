@@ -29,6 +29,8 @@ export default function EditRoomScreen() {
     name: "",
     type: "Non-AC",
     occupency: 1,
+    rent: "0",
+    deposit: "0",
   });
   const [managers, setManagers] = useState([]);
 
@@ -44,6 +46,8 @@ export default function EditRoomScreen() {
         name: roomDetails?.name,
         type: roomDetails?.type,
         occupency: roomDetails?.occupency,
+        rent: roomDetails?.rent,
+        deposit: roomDetails?.deposit,
         pg: id,
       })
       .select();
@@ -90,9 +94,9 @@ export default function EditRoomScreen() {
           onChangeText={(e) => {
             console.log("e", e);
 
-            setRoomDetails({ ...roomDetails, name: e });
+            setRoomDetails({ ...roomDetails, rent: e });
           }}
-          value={roomDetails?.name}
+          value={roomDetails?.rent}
         />
         <Text style={styles.label}>Deposit</Text>
         <TextInput
@@ -100,9 +104,9 @@ export default function EditRoomScreen() {
           onChangeText={(e) => {
             console.log("e", e);
 
-            setRoomDetails({ ...roomDetails, name: e });
+            setRoomDetails({ ...roomDetails, deposit: e });
           }}
-          value={roomDetails?.name}
+          value={roomDetails?.deposit}
         />
         <View
           style={{
@@ -183,4 +187,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  
 });

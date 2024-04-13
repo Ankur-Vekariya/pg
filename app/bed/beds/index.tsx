@@ -1,6 +1,7 @@
 import {
   Alert,
   Button,
+  Dimensions,
   FlatList,
   StyleSheet,
   TouchableOpacity,
@@ -27,77 +28,85 @@ export default function BedScreen() {
     { name: "4", value: 4 },
   ];
   const params = useLocalSearchParams();
-  const data = params;
 
-  console.log("id---------", data?.id, data?.occupency);
+  console.log("id---------", params?.id, params?.occupency);
 
   const [roomDetails, setRoomDetails] = useState({
     name: "",
     type: "Non-AC",
     occupency: 1,
   });
-  const [managers, setManagers] = useState([]);
+  const [beds, setBeds] = useState([]);
 
   const supabase = createClient(
     "https://mjuoregelcweebqtiyyl.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdW9yZWdlbGN3ZWVicXRpeXlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3OTQyMjUsImV4cCI6MjAyNzM3MDIyNX0.g8mr0u7mZl6KO_8erFPLGcMzS6O3_ofrZkCX12vChPM"
   );
 
-  // const addRoom = async () => {
-  //   const { data, error } = await supabase
-  //     .from("rooms")
-  //     .insert({
-  //       name: roomDetails?.name,
-  //       type: roomDetails?.type,
-  //       occupency: roomDetails?.occupency,
-  //       pg: data?.id,
-  //     })
-  //     .select();
-  //   if (error == null) {
-  //     router.push("/(tabs)/three");
-  //   }
-  //   console.log("data=======", data);
-  //   console.log("error=======", error);
-  // };
-
-  const getManagers = async () => {
-    const { data, error } = await supabase.from("managers").select();
+  const getBeds = async () => {
+    const { data, error } = await supabase
+      .from("bed")
+      .select()
+      .eq("room", params?.id);
     console.log("data=======", data);
     console.log("error=======", error);
 
     if (error == null) {
-      setManagers(data);
+      setBeds(data);
     }
   };
 
   useEffect(() => {
-    getManagers();
+    getBeds();
   }, []);
 
-  // let beds = Array(5);
-  // console.log("managers===================",beds);
-
+  const numColumns = 2;
+  const size = Dimensions.get("window").width / numColumns;
   return (
     <View style={styles.container}>
       <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
         data={beds}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.item}
-            // onPress={() => {
-            //   router.push({
-            //     pathname: "/bed/beds/",
-            //     params: { id: item?.id, occupency: item?.occupency },
-            //   });
-            // }}
-          >
-            <Text style={styles.title}>beds</Text>
+          <TouchableOpacity style={{ width: size, height: size }}>
+            <Text
+              style={{
+                flex: 1,
+                backgroundColor: "lightblue",
+                marginVertical: 10,
+                marginHorizontal: 10,
+                padding: 10,
+                borderRadius: 20,
+
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 1,
+                },
+                shadowOpacity: 0.2,
+                shadowRadius: 5.46,
+                minWidth: 100,
+                elevation: 9,
+              }}
+            >
+              {item?.number}
+            </Text>
           </TouchableOpacity>
         )}
-        keyExtractor={(item, index) => index}
+        keyExtractor={(item) => item.id}
+        numColumns={numColumns}
       />
+
+      <View style={{ marginBottom: 10 }}>
+        <Button
+          title="Add Bed"
+          onPress={() => {
+            router.push({
+              pathname: "/bed/editbed/",
+              params: { id: params?.id },
+            });
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -105,7 +114,7 @@ export default function BedScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     // alignItems: "center",
     // justifyContent: "center",
     // margin: 12,
@@ -142,5 +151,35 @@ const styles = StyleSheet.create({
     shadowRadius: 5.46,
 
     elevation: 9,
+  },
+  app: {
+    flex: 4, // the number of columns you want to devide the screen into
+    marginHorizontal: "auto",
+    // width: 400,
+    // backgroundColor: "red",
+  },
+  row: {
+    flexDirection: "row",
+  },
+  "1col": {
+    backgroundColor: "lightblue",
+    borderColor: "#fff",
+    borderWidth: 1,
+    flex: 1,
+  },
+  "2col": {
+    backgroundColor: "green",
+    borderColor: "#fff",
+    borderWidth: 1,
+    flex: 2,
+  },
+  "3col": {
+    backgroundColor: "orange",
+    borderColor: "#fff",
+    borderWidth: 1,
+    flex: 3,
+  },
+  "4col": {
+    flex: 4,
   },
 });

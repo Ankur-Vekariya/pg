@@ -25,10 +25,8 @@ export default function EditBedScreen() {
 
   console.log("id---------", id);
 
-  const [roomDetails, setRoomDetails] = useState({
-    name: "",
-    type: "Non-AC",
-    occupency: 1,
+  const [bedDetails, setBedDetails] = useState({
+    number: "",
   });
   const [managers, setManagers] = useState([]);
 
@@ -37,14 +35,12 @@ export default function EditBedScreen() {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdW9yZWdlbGN3ZWVicXRpeXlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3OTQyMjUsImV4cCI6MjAyNzM3MDIyNX0.g8mr0u7mZl6KO_8erFPLGcMzS6O3_ofrZkCX12vChPM"
   );
 
-  const addRoom = async () => {
+  const addBed = async () => {
     const { data, error } = await supabase
-      .from("rooms")
+      .from("bed")
       .insert({
-        name: roomDetails?.name,
-        type: roomDetails?.type,
-        occupency: roomDetails?.occupency,
-        pg: id,
+        number: bedDetails?.number,
+        room: id,
       })
       .select();
     if (error == null) {
@@ -54,106 +50,22 @@ export default function EditBedScreen() {
     console.log("error=======", error);
   };
 
-  const getManagers = async () => {
-    const { data, error } = await supabase.from("managers").select();
-    console.log("data=======", data);
-    console.log("error=======", error);
-
-    if (error == null) {
-      setManagers(data);
-    }
-  };
-
-  useEffect(() => {
-    getManagers();
-  }, []);
-
-  console.log("managers", managers);
-
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text style={styles.title}>Add new Room</Text>
-        <Text style={styles.label}>Room code/Room name</Text>
+        <Text style={styles.title}>Add new Bed</Text>
+        <Text style={styles.label}>Bed code/Bed name</Text>
         <TextInput
           style={styles.input}
           onChangeText={(e) => {
             console.log("e", e);
 
-            setRoomDetails({ ...roomDetails, name: e });
+            setBedDetails({ ...bedDetails, number: e });
           }}
-          value={roomDetails?.name}
+          value={bedDetails?.number}
         />
         <Text style={styles.label}>Rent</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(e) => {
-            console.log("e", e);
-
-            setRoomDetails({ ...roomDetails, name: e });
-          }}
-          value={roomDetails?.name}
-        />
-        <Text style={styles.label}>Deposit</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(e) => {
-            console.log("e", e);
-
-            setRoomDetails({ ...roomDetails, name: e });
-          }}
-          value={roomDetails?.name}
-        />
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={{ minWidth: "50%" }}>
-            <Text style={styles.label}>Select Occupency</Text>
-            <Picker
-              selectedValue={roomDetails?.occupency}
-              onValueChange={(itemValue, itemIndex) =>
-                setRoomDetails({ ...roomDetails, occupency: itemValue })
-              }
-              style={styles.input}
-            >
-              {occupency.map((item, index) => {
-                return (
-                  <Picker.Item
-                    key={index}
-                    label={item?.name}
-                    value={item?.value}
-                  />
-                );
-              })}
-            </Picker>
-          </View>
-          <View style={{ minWidth: "50%", borderRadius: 10 }}>
-            <Text style={styles.label}>Select Type</Text>
-            <Picker
-              selectedValue={roomDetails.type}
-              onValueChange={(itemValue, itemIndex) =>
-                setRoomDetails({ ...roomDetails, type: itemValue })
-              }
-              style={styles.input}
-            >
-              {type.map((item, index) => {
-                return (
-                  <Picker.Item
-                    key={index}
-                    label={item?.name}
-                    value={item?.value}
-                  />
-                );
-              })}
-            </Picker>
-          </View>
-        </View>
-
-        <Button title="Add" onPress={addRoom} />
+        <Button title="Add" onPress={addBed} />
       </SafeAreaView>
     </View>
   );
