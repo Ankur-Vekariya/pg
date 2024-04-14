@@ -56,7 +56,7 @@ export default function TabFourScreen() {
           borderRadius: 10,
         }}
         onPress={() => {
-          router.push("/editpg/");
+          router.push("/pg/editpg/");
         }}
       >
         <Text style={styles.title}>Add PG</Text>

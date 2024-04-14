@@ -9,19 +9,13 @@ import { SafeAreaView, TextInput } from "react-native";
 import { Link, router } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/userSlice";
+import { supabase } from "@/lib/supabase";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
-  // const balance = useSelector((state) => state.user.auth);
-  // console.log("balance=========", balance);
 
   const [email, onChangeEmail] = useState("admin@admin.com");
   const [password, onChangePassword] = useState("admin");
-
-  const supabase = createClient(
-    "https://mjuoregelcweebqtiyyl.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdW9yZWdlbGN3ZWVicXRpeXlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE3OTQyMjUsImV4cCI6MjAyNzM3MDIyNX0.g8mr0u7mZl6KO_8erFPLGcMzS6O3_ofrZkCX12vChPM"
-  );
 
   const login = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
