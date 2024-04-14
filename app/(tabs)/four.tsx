@@ -4,6 +4,7 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { router } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/userSlice";
 
 export default function TabFourScreen() {
   const dispatch = useDispatch();
@@ -36,8 +37,8 @@ export default function TabFourScreen() {
           source={require("../../assets/images/user.png")}
         />
 
-        <Text style={styles.title}>{user.user.email}</Text>
-        <Text style={styles.title}>{user.user.id}</Text>
+        <Text style={styles.title}>{user?.user?.email}</Text>
+        <Text style={styles.title}>{user?.user?.id}</Text>
       </View>
       <TouchableOpacity
         style={{
@@ -84,13 +85,29 @@ export default function TabFourScreen() {
       >
         <Text style={styles.title}>Add Manager</Text>
       </TouchableOpacity>
-      {/* <Text style={styles.title}>Profile</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(tabs)/two.tsx" /> */}
+      <TouchableOpacity
+        style={{
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 1,
+          },
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+
+          elevation: 1,
+          backgroundColor: "#fff",
+          padding: 10,
+          marginVertical: 5,
+          borderRadius: 10,
+        }}
+        onPress={() => {
+          dispatch(setUser({}));
+          router.replace("/login/");
+        }}
+      >
+        <Text style={styles.title}>Log out</Text>
+      </TouchableOpacity>
     </View>
   );
 }

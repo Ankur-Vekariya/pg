@@ -1,8 +1,14 @@
 import { Redirect } from "expo-router";
+import { useSelector } from "react-redux";
 
 const Index = () => {
-  console.log("in index file =================");
+  const user = useSelector((state) => state.user.auth);
+  console.log("in index file =================", user);
 
-  return <Redirect href="/login/" />;
+  if (!user?.session?.access_token) {
+    return <Redirect href="/login/" />;
+  } else {
+    return <Redirect href="/(tabs)" />;
+  }
 };
 export default Index;

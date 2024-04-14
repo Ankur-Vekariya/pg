@@ -1,4 +1,10 @@
-import { Alert, Button, StyleSheet } from "react-native";
+import {
+  Alert,
+  Button,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
@@ -32,6 +38,12 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <SafeAreaView>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <Image
+            style={{ width: 300, height: 300 }}
+            source={require("../../assets/images/login-image.png")}
+          />
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={onChangeEmail}
@@ -42,18 +54,9 @@ export default function LoginScreen() {
           onChangeText={onChangePassword}
           value={password}
         />
-        <Button title="Press me" onPress={login} />
-        <Text style={styles.title}>
-          Dont have an account
-          <Link href="/signup/">Register</Link>
-        </Text>
-        {/* <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="useless placeholder"
-          keyboardType="numeric"
-        /> */}
+        <TouchableOpacity onPress={login} style={styles.button}>
+          <Text style={styles.btntext}>Login</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </View>
   );
@@ -65,16 +68,26 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: "center",
     // margin: 12,
+    backgroundColor: "#E4E5E8",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
   },
   input: {
-    height: 40,
+    height: 50,
     marginVertical: 10,
-    borderWidth: 1,
+    backgroundColor: "white",
     padding: 10,
     marginHorizontal: 12,
+    borderRadius: 10,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btntext: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });

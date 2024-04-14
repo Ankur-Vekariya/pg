@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { useEffect, useState } from "react";
-import { supabase } from "@/constants/Supabase";
+import { supabase } from "../../lib/supabase";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
