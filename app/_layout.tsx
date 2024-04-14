@@ -11,6 +11,8 @@ import { useEffect } from "react";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { createClient } from "@supabase/supabase-js";
+import { Provider } from "react-redux";
+import { store } from "../store";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,36 +57,41 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="login/index" options={{ headerShown: false }} />
-        <Stack.Screen name="signup/index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="pg/editpg/index" options={{ headerShown: true }} />
-        <Stack.Screen
-          name="pg/pgdetails/index"
-          options={{ headerShown: true }}
-        />
+    <Provider store={store}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="login/index" options={{ headerShown: false }} />
+          <Stack.Screen name="signup/index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="pg/editpg/index"
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="pg/pgdetails/index"
+            options={{ headerShown: true }}
+          />
 
-        <Stack.Screen
-          name="editmanager/index"
-          options={{ headerShown: true }}
-        />
-        <Stack.Screen
-          name="room/editroom/index"
-          options={{ headerShown: true, presentation: "transparentModal" }}
-        />
-        <Stack.Screen
-          name="bed/editbed/index"
-          options={{ headerShown: true, presentation: "transparentModal" }}
-        />
-        <Stack.Screen
-          name="bed/beds/index"
-          options={{ headerShown: true, presentation: "transparentModal" }}
-        />
+          <Stack.Screen
+            name="editmanager/index"
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="room/editroom/index"
+            options={{ headerShown: true, presentation: "transparentModal" }}
+          />
+          <Stack.Screen
+            name="bed/editbed/index"
+            options={{ headerShown: true, presentation: "transparentModal" }}
+          />
+          <Stack.Screen
+            name="bed/beds/index"
+            options={{ headerShown: true, presentation: "transparentModal" }}
+          />
 
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
-    </ThemeProvider>
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      </ThemeProvider>
+    </Provider>
   );
 }

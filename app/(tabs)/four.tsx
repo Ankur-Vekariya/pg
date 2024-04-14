@@ -3,8 +3,12 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { router } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TabFourScreen() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.auth);
+  console.log("balance=========", user);
   return (
     <View style={styles.container}>
       <View
@@ -32,7 +36,8 @@ export default function TabFourScreen() {
           source={require("../../assets/images/user.png")}
         />
 
-        <Text style={styles.title}>Profile</Text>
+        <Text style={styles.title}>{user.user.email}</Text>
+        <Text style={styles.title}>{user.user.id}</Text>
       </View>
       <TouchableOpacity
         style={{
@@ -73,6 +78,7 @@ export default function TabFourScreen() {
           borderRadius: 10,
         }}
         onPress={() => {
+          // dispatch(deposit(10));
           router.push("/editmanager/");
         }}
       >

@@ -7,7 +7,14 @@ import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { SafeAreaView, TextInput } from "react-native";
 import { Link, router } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/userSlice";
+
 export default function LoginScreen() {
+  const dispatch = useDispatch();
+  // const balance = useSelector((state) => state.user.auth);
+  // console.log("balance=========", balance);
+
   const [email, onChangeEmail] = useState("admin@admin.com");
   const [password, onChangePassword] = useState("admin");
 
@@ -24,6 +31,7 @@ export default function LoginScreen() {
     console.log("data=======", data);
     console.log("error=======", error);
     if (data?.session?.access_token) {
+      dispatch(setUser(data));
       router.replace("/(tabs)");
     }
   };
