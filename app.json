@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "pg",
-    "slug": "pg",
+    "slug": "pg-easy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ankur_vekariya.pgeasy"
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +35,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "55a865d5-6189-46b0-b33f-2ff1b5083183"
+      }
+    },
+    "owner": "ankur_vekariya"
   }
 }

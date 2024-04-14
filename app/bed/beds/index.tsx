@@ -3,6 +3,8 @@ import {
   Button,
   Dimensions,
   FlatList,
+  Modal,
+  Pressable,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -17,6 +19,7 @@ import { Link, router, useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
 export default function BedScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
   const type = [
     { name: "AC", value: "ac" },
     { name: "Non-AC", value: "non-Fac" },
@@ -67,7 +70,10 @@ export default function BedScreen() {
       <FlatList
         data={beds}
         renderItem={({ item }) => (
-          <TouchableOpacity style={{ width: size, height: size }}>
+          <TouchableOpacity
+            style={{ width: size, height: size }}
+            onPress={() => setModalVisible(true)}
+          >
             <Text
               style={{
                 flex: 1,
@@ -107,6 +113,33 @@ export default function BedScreen() {
           }}
         />
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View
+          style={{
+            height: "60%",
+            marginTop: "auto",
+            backgroundColor: "white",
+            borderRadius: 50,
+            padding: 10,
+          }}
+        >
+          <Text style={styles.modalText}>Add Tenant</Text>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.textStyle}>Hide Modal</Text>
+          </Pressable>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -152,34 +185,47 @@ const styles = StyleSheet.create({
 
     elevation: 9,
   },
-  app: {
-    flex: 4, // the number of columns you want to devide the screen into
-    marginHorizontal: "auto",
-    // width: 400,
-    // backgroundColor: "red",
-  },
-  row: {
-    flexDirection: "row",
-  },
-  "1col": {
-    backgroundColor: "lightblue",
-    borderColor: "#fff",
-    borderWidth: 1,
+  centeredView: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    backfaceVisibility: "hidden",
   },
-  "2col": {
-    backgroundColor: "green",
-    borderColor: "#fff",
-    borderWidth: 1,
-    flex: 2,
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  "3col": {
-    backgroundColor: "orange",
-    borderColor: "#fff",
-    borderWidth: 1,
-    flex: 3,
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
   },
-  "4col": {
-    flex: 4,
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 20,
   },
 });
